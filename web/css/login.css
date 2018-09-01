@@ -1,0 +1,196 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    border:none;
+    overflow-y:hidden;
+    overflow-x:hidden;
+    font-size:19px;
+    font-family:Agency FB;     
+}
+.fundo {           
+    margin:0;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    text-align: center;     
+    background-image: url(../img/essa.jpeg);
+    background-position: 2% 42%;   
+    background-size: cover;
+}
+.login-page {    
+    padding: 6% 0 0;
+    margin: auto;   
+    width:100%;
+    height:100%;
+}.form {
+    font-family:Agency FB;
+    position:relative;
+    z-index: 1;
+    background-color:rgba(255, 255, 255, 0.5);
+    max-width: 460px;
+    margin: 0 auto 100px;
+    padding: 20px;
+    top:60px;
+    text-align: center;
+    font-size: 100%;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    border-radius: 10px;
+}
+.form input {
+    font-family:Agency FB;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 100%;
+}
+.commandButton {
+    font-family:Agency FB;
+    font-size:18px;
+    text-transform: uppercase;
+    outline: 0;    
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #0a3acd;
+    font-size: 100%;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+
+}
+.form button:hover,.form button:active,.form button:focus {
+    background: #0a3acd;
+}
+
+.acessar {
+    display: inline-block;
+    border-radius: 10px;
+    background-color: #0a3acd;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+    width: 300px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.acessar span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.50s;
+}
+
+.acessar span:after {    
+    content: '\00bb';
+    position: relative;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.50s;
+}
+
+.acessar:hover span {
+    padding-right: 50px;
+}
+
+.acessar:hover span:after {
+    opacity: 10;
+    right: 0;
+}
+
+/*
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+
+        <p:ajaxStatus  style="width:32px;height:32px;position:fixed;left: 10px;top: 10px">
+            <f:facet name="start">
+                <p:graphicImage width="50" height="50" name="images/ajax001.gif" library="spark-layout"/>
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+
+
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>Login do Usuário</title>
+        <link href="css/login.css" rel="stylesheet"></link>
+        <h:outputScript name="js/layout.js" library="spark-layout" />
+
+        <h:outputText value="&lt;!--[if gte IE 9]&gt;" escape="false" />
+        <style type="text/css">
+             styles for IE 9 
+</style>
+<h:outputText value="&lt;![endif]--&gt;" escape="false" />
+
+<ui:insert name="head" />
+
+</h:head>
+
+<h:body>
+<h:form id="frmPrincipal">         
+<div id="layout-portlets-cover">
+<div class="other-pages-box Container30 Responsive50 MarAuto Fnone TexAlCenter ShadowGray MarTop10" style="margin-top:5%; background-repeat:no-repeat; background-position:center; background-size:cover;">
+<div class="Container80 Fnone MarAuto TexAlCenter">
+<div class="EmptyBox10"></div>
+
+
+<h:panelGrid class="form" columns="1" cellpadding="5">
+<p:messages id="messages"  autoUpdate="true" closable="true" />                        
+<div class="TexAlLeft"> 
+<h1 style="font-size:48px">Sistema GXS</h1>  <br/>
+
+<div class="EmptyBox1"></div>
+<h:outputLabel value="Usuário"/>
+<p:inputText id="login" value="#{login.nome}" />
+<p:message for="login" display="icon" />
+
+<div class="EmptyBox10"></div>
+
+<div class="EmptyBox1"></div>
+<h:outputLabel value="Senha"/>
+<p:password id="senha" value="#{login.senha}" />
+<p:message for="senha" display="icon" />               
+
+<div class="EmptyBox10"></div>
+
+<div class="EmptyBox10"></div>
+
+</div>
+
+<div class="EmptyBox20"></div>
+<div class="EmptyBox30"></div>
+
+<p:commandButton actionListener="#{login.validacaoLogin()}" value="Acessar"  styleClass="Fs16" update=":frmPrincipal"/>
+
+
+<div class="EmptyBox10"></div>                
+
+</h:panelGrid>
+</div>
+</div>
+</div>
+</h:form>
+</h:body>
+</html> */

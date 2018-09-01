@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+
+        <p:ajaxStatus  style="width:32px;height:32px;position:fixed;left: 10px;top: 10px">
+            <f:facet name="start">
+                <p:graphicImage width="50" height="50" name="images/ajax001.gif" library="spark-layout"/>
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+
+
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>Login do Usuário</title>
+        <link href="css/login.css" rel="stylesheet"></link>
+        <h:outputScript name="js/layout.js" library="spark-layout" />
+
+        <h:outputText value="&lt;!--[if gte IE 9]&gt;" escape="false" />
+        <style type="text/css">
+            /* styles for IE 9 */
+        </style>
+        <h:outputText value="&lt;![endif]--&gt;" escape="false" />
+
+        <ui:insert name="head" />
+
+    </h:head>
+
+    <h:body>
+        <h:form id="frmPrincipal">         
+
+            <h:panelGrid class="form" columns="1" cellpadding="5">
+                <p:messages id="messages"  autoUpdate="true" closable="true" />                        
+
+                <h1 style="font-size:48px; ">Sistema GXS</h1>  <br/>  
+
+                <div class="EmptyBox10"></div>
+                <div class="EmptyBox1"></div>
+                <h:outputLabel value="Usuário"/>
+                <p:inputText id="login" value="#{usuarioController.login}" />
+                <p:message for="login" display="icon" />
+
+                <div class="EmptyBox10"></div>
+
+                <div class="EmptyBox1"></div>
+                <h:outputLabel value="Senha"/>
+                <p:password id="senha" value="#{usuarioController.password}" />
+                <p:message for="senha" display="icon" />               
+
+
+                <p:commandButton actionListener="#{usuarioController.validacaoLogin()}" value="Acessar"  styleClass="Fs16" update=":frmPrincipal"/>
+
+            </h:panelGrid>
+
+        </h:form> 
+
+        <h:outputStylesheet name="css/core-layout.css" library="spark-layout" />
+        <h:outputStylesheet name="css/font-awesome.css" library="spark-layout" />
+        <h:outputStylesheet name="css/animate.css" library="spark-layout" />
+        <h:outputStylesheet name="css/spark-layout.css" library="spark-layout" />
+
+    </h:body>
+
+</html>

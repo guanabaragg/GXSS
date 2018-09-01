@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>GXS</title>
+        <link href="css/login.css" rel="stylesheet"></link>
+
+    </h:head>
+    <h:body class="fundo">
+        <h:form id="formLogin" class="login-page">
+            <div class="other-pages-box Container30 Responsive50 MarAuto Fnone TexAlCenter ShadowGray MarTop10" style="margin-top:5%; background-repeat:no-repeat; background-position:center; background-size:cover;">
+                <div class="Container80 Fnone MarAuto TexAlCenter">
+                    <div class="EmptyBox10"></div>
+
+                    <p:growl showDetail="true" sticky="true" />
+
+                    <h:panelGrid class="form" columns="1" cellpadding="5">
+                        <div class="TexAlLeft"> 
+                            <h1 style="font-size:48px">Sistema GXS</h1>  <br/>
+
+                            <div class="EmptyBox1"></div>
+                            <h:outputLabel value="Usuário"/>
+                            <p:inputText id="login" value="#{login.nome}" />
+                            <p:message for="login" display="icon" />
+
+                            <div class="EmptyBox10"></div>
+
+                            <div class="EmptyBox1"></div>
+                            <h:outputLabel value="Senha"/>
+                            <p:password id="senha" value="#{login.senha}" />
+                            <p:message for="senha" display="icon" />               
+
+                            <div class="EmptyBox10"></div>
+
+                            <div class="EmptyBox10"></div>
+
+                        </div>
+
+                        <div class="EmptyBox20"></div>
+                        <div class="EmptyBox30"></div>
+
+                        <p:commandButton actionListener="#{login.validacaoLogin()}" value="Acessar"  styleClass="Fs16" update=":formLogin"/>
+
+
+                        <div class="EmptyBox10"></div>                
+
+                    </h:panelGrid>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>

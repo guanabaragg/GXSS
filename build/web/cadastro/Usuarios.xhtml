@@ -1,0 +1,229 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="head">
+        <script type="text/javascript">
+            function skinChart() {
+                this.cfg.shadow = false;
+                this.cfg.seriesColors = ['#71CC8D', '#33AFDE', '#F7941E'];
+                this.cfg.grid = {
+                    background: '#EDF3F6',
+                    borderColor: '#D9E3E8',
+                    gridLineColor: '#D9E3E8',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#778D9B'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    markerOptions: {
+                        shadow: false
+                    }
+                }
+            }
+            function skinPie() {
+                this.cfg.seriesColors = ['#dae8ef', '#27aae1', '#33ccff', '#9fadb5'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#eaeaea',
+                    gridLineColor: '#e5ebf0',
+                    shadow: false,
+                    borderWidth: 0
+                };
+                this.cfg.seriesDefaults.shadow = false;
+            }
+            /*Botão topo*/
+            $(document).ready(function () {
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 100) {
+                        $('a[href="#top"]').fadeIn();
+                    } else {
+                        $('a[href="#top"]').fadeOut();
+                    }
+                });
+                $('a[href="#top"]').click(function () {
+                    $('html, body').animate({scrollTop: 0}, 800);
+                    return false;
+                });
+            });
+        </script>
+        <style type="text/css">
+            .jqplot-target, .jqplot-axis {
+                color: #778D9B;
+            }
+            /*Botão topo */
+            a[href="#top"]{
+                padding:10px;
+                position:fixed;
+                top: 90%;
+                right:2px;
+                display:none;
+                font-size: 30px;
+            }
+            a[href="#top"]:hover{
+                text-decoration:none;
+            }
+        </style>
+
+        <!--f:metadata>
+            <f:viewParam name="id" value="#{parceiroController.id}" />
+            <f:viewAction  action="#{parceiroController.iniciar}" />
+        </f:metadata-->
+
+    </ui:define>
+
+    <ui:define name="content"  >
+
+        <div class="layout-portlets-box" >
+            <div class="Container100 ui-fluid">
+                <div class="ContainerIndent"> 
+
+                    <a href="#top"><p:commandButton icon="fa fa-arrow-up Fs18 white"/></a>
+
+                    <p:messages id="messages5"  autoUpdate="true" closable="true" />
+
+                    <h:form id="frmLista" >
+
+                        <p:panelGrid columns="4"  layout="grid" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-10,ui-grid-col-3,ui-grid-col-0,ui-grid-col-0" rendered="#{parceiroController.tela == 0}" >
+                            <h2 style="color:black">Cadastro de Usuários</h2>
+
+                            <p:inputText />
+                            <p:commandButton value="Buscar" actionListener="#{usuarioController.lista()}" update="listaPesquisa" />
+                            <p:commandButton value="Novo" actionListener="#{parceiroController.novo()}" update=":frmDetalhe :frmLista" />
+
+                        </p:panelGrid>
+
+
+                        <div class="Container100 Responsive100" >
+                            <p:dataTable id="listaPesquisa" value="#{usuarioController.listaUsers}" var="p" rendered="#{parceiroController.tela == 0}" reflow="true" emptyMessage="Lista vazia" paginator="true" rows="15"  rowsPerPageTemplate="15,50,100">
+
+                                <p:column headerText="ID" >
+                                    <p:commandLink value="#{p.id}"  ajax="false" update=":frmDetalhe :frmLista" />
+                                </p:column>
+
+                                <p:column headerText="Nome" >
+                                    <p:commandLink value="#{p.nome}"  ajax="false" update=":frmDetalhe :frmLista" />
+                                </p:column>
+
+                                <p:column headerText="Senha" >
+                                    <p:commandLink value="#{p.senha}" ajax="false" update=":frmDetalhe :frmLista" />
+                                </p:column>
+
+                                <p:column headerText="Email" >
+                                    <h:outputText value="#{p.email}" />
+                                </p:column>
+
+                                <p:column headerText="Data Cadastro" >
+                                    <h:outputText value="#{p.dtCadastro}" />
+                                </p:column>
+
+                                <p:column width="8%"  style="text-align: center" exportable="false">
+                                    <p:commandButton actionListener="#" icon="fa fa-search Fs18 white"  ajax="false" update=":frmDetalhe :frmLista"/>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </div>
+                    </h:form>
+
+                    <h:form id="frmDetalhe">
+                        <p:panelGrid rendered="#{parceiroController.tela == 1}"  columns="5"  layout="grid" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-10,ui-grid-col-3,ui-grid-col-0,ui-grid-col-0">
+
+                            <p:panelGrid>
+                                <h2>Usuários</h2>
+                            </p:panelGrid>
+                            <p:panelGrid></p:panelGrid>
+
+                            <p:commandButton value="Salvar" actionListener="#{usuarioController.salvar()}" update=":frmDetalhe :frmLista" />
+                            <p:commandButton value="Voltar" immediate="true" actionListener="#{parceiroController.mudarTela(0)}" update=":frmDetalhe :frmLista" />
+
+                            <p:commandButton value="Deletar" styleClass="RedButton" actionListener="#{usuarioController.deletar()}"  update=":frmDetalhe :frmLista" >
+                                <p:confirm header="Confirmação" message="Deseja excluir o registro?" icon="ui-icon-alert" />
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" />
+                            </p:confirmDialog>                                                              
+
+                        </p:panelGrid>
+
+                        <p:separator/>
+
+                        <p:panelGrid rendered="#{parceiroController.tela == 1}" columns="1" layout="grid" styleClass="ui-panelgrid-blank"  >                           
+
+                            <p:panelGrid  columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-7,ui-grid-col-4,ui-grid-col-7,ui-grid-col-4">                           
+
+                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" > 
+                                    <h:outputText value="Nome"  />                
+                                    <p:inputText value="#{usuarioController.name}" required="true" requiredMessage="[NOME] é Obrigatório!"/>                
+                                </p:panelGrid>
+
+                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" > 
+                                    <h:outputText value="Login"  />                
+                                    <p:inputText  value="#{usuarioController.login}" requiredMessage="[LOGIN] é Obrigatório!"/>                
+                                </p:panelGrid>
+
+                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" > 
+                                    <h:outputText value="CPF" />
+                                    <p:inputMask value="#{usuarioController.cpf}" mask="999.999.999-99" requiredMessage="[EMAIL] é Obrigatório!"/>                                    
+                                </p:panelGrid>
+
+                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" > 
+                                    <h:outputText value="Senha" />
+                                    <p:password value="#{usuarioController.password}" required="true" requiredMessage="[SENHA] é Obrigatório!" />
+                                </p:panelGrid>                                                                                                                     
+                            </p:panelGrid>
+
+                            <p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank">
+
+                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" style="width:350px;">
+                                    <h:outputText value="Telefone Residêncial" />
+                                    <p:inputMask value="#{usuarioController.tel}" mask="(999) 9999-9999"  requiredMessage="[TEL RESIDENCIAL] é Obrigatório!"/>
+                                </p:panelGrid> 
+
+                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" style="width:350px;">
+                                    <h:outputText value="Celular WhatsApp" />
+                                    <p:inputMask value="#{usuarioController.whatsapp}" mask="(999) 9 9999-9999" requiredMessage="[CEL/WHATSAPP] é Obrigatório!"/>
+                                </p:panelGrid> 
+
+                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" style="width:310px;">
+                                    <h:outputText value="E-mail" />
+                                    <p:inputText value="#{usuarioController.emaill}" required="true" requiredMessage="[EMAIL] é Obrigatório!"/>                                    
+                                </p:panelGrid> 
+
+                            </p:panelGrid>                            
+
+                            <p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-3,ui-grid-col-3"> 
+
+                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank">
+                                    <h:outputText style="font-family:Agency FB;" value="Data Cadastro:" />
+                                    <p:calendar id="dtCadastro" value="#{usuarioController.dtCadastro}" locale="pt" pattern="dd/MM/yyyy" >                
+                                        <p:ajax event="dateSelect" />
+                                    </p:calendar>
+                                    <p:message for="dtCadastro" display="icon" />
+                                </p:panelGrid> 
+
+                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank">
+                                    <h:outputText value="Situaçao:" />
+                                    <p:selectOneMenu value="#{usuarioController.situacao}" var="p" >
+                                        <f:selectItem itemLabel="Ativo" itemValue="#{usuarioController.situacaoA}"/>
+                                        <f:selectItem itemLabel="Inativo" itemValue="#{usuarioController.situacaoI}"/>                            
+                                    </p:selectOneMenu>
+                                </p:panelGrid>
+                            </p:panelGrid>
+
+                        </p:panelGrid>                            
+                    </h:form>
+                </div>
+            </div>
+        </div>       
+    </ui:define>
+
+</ui:composition>
