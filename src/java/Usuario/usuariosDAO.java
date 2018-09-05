@@ -75,6 +75,40 @@ public class usuariosDAO {
         }
     }
 
+    public void selecionar(usuariosBean pusuariosBean) throws SQLException {
+
+        try {
+
+            Connection conexao = Conexao.getConexao();
+
+            PreparedStatement ps = conexao.prepareStatement("select * from usuarios");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                usuariosBean user = new usuariosBean();
+
+                pusuariosBean.setId(rs.getInt("id"));
+                pusuariosBean.setNome(rs.getString("nome"));
+                pusuariosBean.setLogin(rs.getString("login"));
+                pusuariosBean.setSenha(rs.getString("senha"));
+                pusuariosBean.setCpf(rs.getString("cpf"));
+                pusuariosBean.setTel(rs.getString("tel"));
+                pusuariosBean.setWhatsapp(rs.getString("whatsapp"));
+                pusuariosBean.setEmail(rs.getString("email"));
+                pusuariosBean.setDtCadastro(rs.getDate("dtCadastro"));
+                pusuariosBean.setSituacao(rs.getString("situacao"));
+                listaUsers.add(user);
+
+            }
+            ps.execute();
+            ps.close();
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
     public void alterar(usuariosBean user) {
 // nome,login,senha,cpf,tel,whatsapp,email,dtCadastro,situacao
         try {
@@ -150,42 +184,6 @@ public class usuariosDAO {
             //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "deu merda ao validar login. " + ex, ""));
         }
         return usuarios;
-    }
-
-    public List<usuariosBean> selecionar(usuariosBean userBean) throws SQLException {
-
-        try {
-
-            Connection conexao = Conexao.getConexao();
-
-            PreparedStatement ps = conexao.prepareStatement("select * from usuarios");
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                usuariosBean user = new usuariosBean();
-
-                user.setId(rs.getInt("id"));
-                user.setNome(rs.getString("nome"));
-                user.setLogin(rs.getString("login"));
-                user.setSenha(rs.getString("senha"));
-                user.setCpf(rs.getString("cpf"));
-                user.setTel(rs.getString("tel"));
-                user.setWhatsapp(rs.getString("whatsapp"));
-                user.setEmail(rs.getString("email"));
-                user.setDtCadastro(rs.getDate("dtCadastro"));
-                user.setSituacao(rs.getString("situacao"));
-                listaUsers.add(user);
-
-            }
-            ps.execute();
-            ps.close();
-
-            return listaUsers;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return null;
-        }
     }
 
     public List<usuariosBean> getListaUsers() {
