@@ -94,6 +94,7 @@ public class usuariosDAO {
     }
 
     public void deletar(usuariosBean user) {
+
         try {
             Connection conexao = Conexao.getConexao();
             PreparedStatement ps = conexao.prepareStatement("delete from usuarios where nome = ?");
